@@ -20,43 +20,47 @@ program i2c;
 const
   DEVICE_RD = $7F;
   DEVICE_WR = $7E;
-  LOW       = 0;
-  HIGH      = 1;
+  SDA_LOW   = $00;
+  SDA_HIGH  = $80;
+  SCL_LOW   = $00;
+  SCL_HIGH  = $01;
+  ACK       = $00;
+  NACK      = $80;
   I2C_PORT  = $0C;
   SDA_MASK  = $80;
-  SDA_BIT   = 7;
 
   function getState: byte;
   begin
-    getState := (port[I2C_PORT] shr SDA_BIT) and $01;
+    getState := port[I2C_PORT] and SDA_MASK;
   end;
 
   procedure setState(sda, sdc: byte);
   begin
-    port[I2C_PORT] := (sda shl SDA_BIT) or sdc;
+    port[I2C_PORT] := sda or sdc;
   end;
 
   function readBit: byte;
   begin
-    setState(HIGH, LOW);
-    setState(HIGH, HIGH);
+    setState(SDA_HIGH, SCL_LOW);
+    setState(SDA_HIGH, SCL_HIGH);
     readBit := getState;
   end;
 
   procedure writeBit(sda: byte);
   begin
-    setState(sda, LOW);
-    setState(sda, HIGH);
+    setState(sda, SCL_LOW);
+    setState(sda, SCL_HIGH);
   end;
 
   function readByte(ack: byte): byte;
   var i, b: byte;
   begin
     b := 0;
-    for i := 0 to 7 do begin
-      b := b shl 1;
-      b := b or readBit;
-    end;
+    for i := 0 to 7 do
+      if readBit = SDA_HIGH then
+        b := (b shl 1) or $01
+      else
+        b := b shl 1;
     writeBit(ack);
     readByte := b;
   end;
@@ -65,10 +69,7 @@ const
   var i: byte;
   begin
     for i := 0 to 7 do begin
-      if b and $80 = 0 then
-        writeBit(LOW)
-      else
-        writeBit(HIGH);
+      writeBit(b and SDA_MASK);
       b := b shl 1;
     end;
     writeByte := readBit; { return ACK/NACK value }
@@ -76,21 +77,21 @@ const
 
   procedure startSequence;
   begin
-    setState(HIGH, HIGH);
-    setState(LOW, HIGH);
-    setState(LOW, LOW);
+    setState(SDA_HIGH, SCL_HIGH);
+    setState(SDA_LOW, SCL_HIGH);
+    setState(SDA_LOW, SCL_LOW);
   end;
 
   procedure endSequence;
   begin
-    setState(LOW, LOW);
-    setState(LOW, HIGH);
-    setState(HIGH, HIGH);
+    setState(SDA_LOW, SCL_LOW);
+    setState(SDA_LOW, SCL_HIGH);
+    setState(SDA_HIGH, SCL_HIGH);
   end;
 
 var
   i: byte;
-  ack: byte;
+  ack_nack: byte;
   buttons: byte;
 
 begin
@@ -98,8 +99,8 @@ begin
   for i := 0 to 7 do begin
     write('Press enter to READ from SC407 I2C bus'); readln;
     startSequence;
-    ack := writeByte(DEVICE_RD);
-    buttons := readByte(HIGH);
+    ack_nack := writeByte(DEVICE_RD);
+    buttons := readByte(NACK);
     endSequence;
     writeln('Button state: ', buttons);
   end;
@@ -107,9 +108,9 @@ begin
   writeln('Write the SC407 LEDs - counts from 0 to 255.');
   write('Press enter to WRITE to SC407 I2C bus'); readln;
   startSequence;
-  ack := writeByte(DEVICE_WR);
+  ack_nack := writeByte(DEVICE_WR);
   for i := 0 to 255 do begin
-    ack := writeByte(i);
+    ack_nack := writeByte(i);
   end;
   endSequence;
 end.
