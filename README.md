@@ -4,7 +4,7 @@ The slave device is an SC407 digital I/O board. Check https://smallcomputercentr
 
 # Environments
 The driver program runs on the SC140 as well as the SC126 main board. The SC126 contains an I2C port on the main board; the SC140 works with an SC144 I2C bus master and RTC board.
-Both setup were tested with an SC407 board which is an I2C slave device with digital I/O through buttons and LEDs.
+Both setups were tested with an SC407 board which is an I2C slave device with digital I/O through buttons and LEDs.
 
 # Usage
 Load the .PAS-file into Turbo Pascal and just run it.
