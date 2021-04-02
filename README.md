@@ -16,6 +16,9 @@ After the test reads, the program writes a counter 0..255 to the LEDs. It is fas
 There is no real error handling, the ACK/NACK response is read but not used.
 
 # Speed
-The program was measured using a simple USB logic analyzer and PulseView. The timing diagrams indicate that the speed is approximately 10 KHz.
+The program was measured using a simple USB logic analyzer and PulseView. The timing diagrams indicate that the speed is approximately 15 KHz.
 If you want higher performance you should probably implement the driver in Z80/Z180 assembler. Also, some optimizations to the Pascal code are possible, but
 the structure right now is for a more readable program, easier to learn from (hopefully), and understand the details of I2C.
+
+# Timing Diagram
+![PulseView sample](I2C-sample.jpg)
