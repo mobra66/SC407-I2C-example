@@ -23,4 +23,6 @@ the structure right now is for a more readable program, easier to learn from (ho
 # Timing Diagram
 This is a recording/sample of the bus on the SC407, while reading the buttons and no button is pressed (0xFF). A cheap USB logic analyzer and PulseView was used to sample the bus.
 
+From the diagram, you can notice that the "pulses" of the SDC clock line is not exactly regular - due to the software bit-banging, there is a variance in the timing. 
+
 ![PulseView sample](I2C-sample.jpg)
