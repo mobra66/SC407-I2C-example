@@ -1,4 +1,4 @@
-# SC407-I2C-example
+# I2C Driver Example for SC407 Device
 This program is written for Turbo Pascal 3 for CP/M. It is a simple and rudimentary implementation of an I2C bus master driver, using bit-banging to the I2C port.
 The slave device is an SC407 digital I/O board. Check https://smallcomputercentral.wordpress.com/ for more info on the boards.
 
