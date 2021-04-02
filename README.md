@@ -3,7 +3,7 @@ This program is written for Turbo Pascal 3 for CP/M. It is a simple and rudiment
 The slave device is an SC407 digital I/O board. Check https://smallcomputercentral.wordpress.com/ for more info on the boards.
 
 # Environments
-The driver program runs on the SC140 as well as the SC126 main board. The SC126 contains an I2C port on the main board; the SC140 works with an SC144 I2C bus master and RTC board.
+The driver program runs on the SC140 as well as the SC126 main board (both use an 18 MHz Z180 CPU). The SC126 contains an I2C port on the main board; the SC140 works with an SC144 I2C bus master and RTC board.
 Both setups were tested with an SC407 board which is an I2C slave device with digital I/O through buttons and LEDs.
 
 # Usage
