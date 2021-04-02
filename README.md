@@ -21,4 +21,6 @@ If you want higher performance you should probably implement the driver in Z80/Z
 the structure right now is for a more readable program, easier to learn from (hopefully), and understand the details of I2C.
 
 # Timing Diagram
+This is a recording/sample of the bus on the SC407, while reading the buttons and no button is pressed (0xFF). A cheap USB logic analyzer and PulseView was used to sample the bus.
+
 ![PulseView sample](I2C-sample.jpg)
