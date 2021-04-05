@@ -7,7 +7,7 @@ The driver program runs on the SC140 as well as the SC126 main board (both use a
 Both setups were tested with an SC407 board which is an I2C slave device with digital I/O through buttons and LEDs.
 
 # Usage
-Load the .PAS-file into Turbo Pascal and just run it.
+Load the SC407.PAS-file into Turbo Pascal and just run it. It automatically includes the I2CLIB.PAS file. You can include I2CLIB.PAS if you want to create another program using I2C. Just remember to set constants DEVICE_WR and DEVICE_RD to the correct I2C device address *before* the include statement.
 
 The test program starts by reading the buttons 8 times, which is just enough to test press all buttons. Hold down one button on the SC407 and then press ENTER. Repeat.
 Note that the buttons read 0 (low) when pressed, otherwise 1 (high).
