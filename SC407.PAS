@@ -17,13 +17,13 @@
 
 program sc407;
 
+{$I I2CLIB.PAS}
+
 const
   DEVICE_RD = $7F;
   DEVICE_WR = $7E;
   ACK       = $00;
   NACK      = $01;
-
-  {$I I2CLIB.PAS}
 
 var
   i: byte;
